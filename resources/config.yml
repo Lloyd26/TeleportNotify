@@ -1,0 +1,21 @@
+messages:
+  commands:
+    tp:
+      1player:
+        player: '&eYou''ve teleported to &3%target%&e.'
+        target: '&3%player% &eteleported to you.'
+        staff: '&7&o[%player%: &eteleported to %target%&7&o]'
+      2player:
+        player: '&eYou''ve teleported &3%player1% &eto &3%player2%&e.'
+        player1: '&eYou were teleported to &3%player2% &eby &3%player%&e.'
+        player2: '&3%player1% &ewas teleported to you by &3%player%&e.'
+        staff: '&7&o[%player%: &eteleported %player1% to %player2%&7&o]'
+      coords:
+        player: '&6Teleporting...'
+    tphere:
+      player: '&eYou''ve teleported &3%target% &eto &3you&e.'
+      target: '&eYou were teleported to &3%player%'
+      staff: '&7&o[%player%: &eteleported %target% to %player%&7&o]'
+    tpall:
+      target: '&eAll players were teleported to &3%player%&e.'
+      staff: '&7&o[%player%: &eteleported all players to %player%&7&o]'
