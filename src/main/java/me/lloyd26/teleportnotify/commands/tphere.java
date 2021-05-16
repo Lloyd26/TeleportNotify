@@ -1,6 +1,8 @@
 package me.lloyd26.teleportnotify.commands;
 
 import me.lloyd26.teleportnotify.TeleportNotify;
+import me.lloyd26.teleportnotify.utils.Error;
+import me.lloyd26.teleportnotify.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,12 +20,10 @@ public class tphere implements CommandExecutor {
             Player player = (Player) sender;
             String playerName = player.getName();
             if (player.hasPermission("tpnotify.tphere.use")) {
-                try {
-                    if (args.length == 0) {
-                        player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Too few arguments!");
-                        player.sendMessage(ChatColor.RED + "Usages:");
-                        player.sendMessage(ChatColor.RED + " - /tphere <player>");
-                    } else if (args.length == 1) {
+                if (args.length == 0) {
+                    player.sendMessage(Utils.setUsage("/teleporthere <player>"));
+                } else if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
+                    if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
                         String targetName = target.getName();
                         target.teleport(player.getLocation());
@@ -32,18 +32,22 @@ public class tphere implements CommandExecutor {
                             target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.target").replaceAll("%player%", playerName)));
                         }
                         if (player.hasPermission("tpnotify.notify.admin")) {
-                            Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", targetName)), "tpnotify.notify.admin");
-                            System.out.println((ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", targetName))));
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                if (p.hasPermission("tpnotify.notify.admin")) {
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", targetName)));
+                                }
+                            }
+                            Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", targetName)));
                         }
                     }
-                } catch (NullPointerException e) {
-                    player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Player not found!");
+                } else {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
                 }
             } else {
-                player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Insufficient permission!");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.NOPERMISSION)));
             }
         } else {
-            sender.sendMessage("You need to be a player to execute this command!");
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERSONLY)));
         }
         return true;
     }
