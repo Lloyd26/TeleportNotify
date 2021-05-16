@@ -4,6 +4,9 @@ import me.lloyd26.teleportnotify.TeleportNotify;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Utils {
 
     private static final TeleportNotify plugin = TeleportNotify.getPlugin(TeleportNotify.class);
@@ -15,8 +18,15 @@ public class Utils {
     public static String setUsage(String usage) {
         Validate.notNull(usage);
         Validate.notEmpty(usage);
-        String[] args = usage.split("(?=<)|(?=\\[)", 2);
-        return getPrimaryColor() + "Usage: " + getAccentColor() + args[0] + ChatColor.RESET + args[1];
+
+        Pattern pattern = Pattern.compile("(?=<)|(?=\\[)");
+        Matcher matcher = pattern.matcher(usage);
+        if (matcher.find()) {
+            String[] args = usage.split("(?=<)|(?=\\[)", 2);
+            return getPrimaryColor() + "Usage: " + getAccentColor() + args[0] + ChatColor.RESET + args[1];
+        } else {
+            return getPrimaryColor() + "Usage: " + getAccentColor() + usage;
+        }
     }
 
     public static ChatColor getPrimaryColor() {
