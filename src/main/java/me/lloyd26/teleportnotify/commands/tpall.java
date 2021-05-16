@@ -20,13 +20,11 @@ public class tpall implements CommandExecutor {
             if (player.hasPermission("tpnotify.tpall.use")) {
                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                     p.teleport(player.getLocation());
-                    //p.sendMessage(ChatColor.YELLOW + "All players were teleported to " + ChatColor.DARK_AQUA + player.getName());
                     if (p.hasPermission("tpnotfy.notify.admin")) {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tpall.target").replaceAll("%player%", playerName)));
                     }
                 }
                 if (player.hasPermission("tpnotify.notify.admin")) {
-                    //Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', "&7&o[" + player.getName() + ": &eteleported all players to " + player.getName() + "&7&o]"), "tpnotify.notify.admin");
                     Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tpall.staff").replaceAll("%player%", playerName)), "tpnotify.notify.admin");
                     System.out.println((ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tpall.staff").replaceAll("%player%", playerName))));
                 }
