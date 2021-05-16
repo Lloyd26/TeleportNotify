@@ -20,7 +20,7 @@ public class tpall implements CommandExecutor {
             if (player.hasPermission("tpnotify.tpall.use")) {
                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                     p.teleport(player.getLocation());
-                    if (p.hasPermission("tpnotfy.notify.admin")) {
+                    if (p.hasPermission("tpnotify.notify.admin")) {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tpall.target").replaceAll("%player%", playerName)));
                     }
                 }
