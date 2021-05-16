@@ -1,6 +1,7 @@
 package me.lloyd26.teleportnotify.commands;
 
 import me.lloyd26.teleportnotify.TeleportNotify;
+import me.lloyd26.teleportnotify.utils.Error;
 import me.lloyd26.teleportnotify.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -81,10 +82,10 @@ public class tp implements CommandExecutor {
                         }
                     }
                 } catch (NullPointerException e) {
-                    player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Player not found!");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
                 }
             } else {
-                player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Insufficient permission!");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.NOPERMISSION)));
             }
         } else {
             sender.sendMessage("You need to be a player to execute this command!");
