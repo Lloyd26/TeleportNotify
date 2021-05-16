@@ -27,18 +27,13 @@ public class tphere implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[0]);
                         String targetName = target.getName();
                         target.teleport(player.getLocation());
-                        //player.sendMessage(ChatColor.YELLOW + "You've teleported " + ChatColor.DARK_AQUA + args[0] + ChatColor.YELLOW + " to you");
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.player").replaceAll("%target%", targetName)));
-                        //target.sendMessage(ChatColor.YELLOW + "You were teleported to " + ChatColor.DARK_AQUA + args[0]);
                         if (target.hasPermission("tpnotify.notify.admin")) {
                             target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.target").replaceAll("%player%", playerName)));
                         }
                         if (player.hasPermission("tpnotify.notify.admin")) {
-                            //if (player.isOp()) {
-                            //Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', "&7&o[" + player.getName() + ": &eteleported " + args[0] + " to " + player.getName() + "&7&o]"), "tpnotify.notify.admin");
                             Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", targetName)), "tpnotify.notify.admin");
                             System.out.println((ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", targetName))));
-                            //Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',"&7&o[" + player.getName() + ": &e&oteleported " + args[0] + " to " + args[1] + "&7&o]"));
                         }
                     }
                 } catch (NullPointerException e) {
