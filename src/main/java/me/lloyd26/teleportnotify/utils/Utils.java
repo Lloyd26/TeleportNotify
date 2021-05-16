@@ -35,6 +35,8 @@ public class Utils {
                 return plugin.getConfig().getString("messages.errors.PlayerNotFound");
             case NOPERMISSION:
                 return plugin.getConfig().getString("messages.errors.NoPermission");
+            case PLAYERSONLY:
+                return plugin.getConfig().getString("messages.errors.PlayersOnly");
             default:
                 return null;
         }
