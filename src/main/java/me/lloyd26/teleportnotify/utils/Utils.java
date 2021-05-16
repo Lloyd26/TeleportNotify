@@ -28,4 +28,15 @@ public class Utils {
         Validate.notNull(plugin.getConfig().getString("messages.theme.accent-color"));
         return ChatColor.valueOf(plugin.getConfig().getString("messages.theme.accent-color"));
     }
+
+    public static String getErrorMessage(Error error) {
+        switch (error) {
+            case PLAYERNOTFOUND:
+                return plugin.getConfig().getString("messages.errors.PlayerNotFound");
+            case NOPERMISSION:
+                return plugin.getConfig().getString("messages.errors.NoPermission");
+            default:
+                return null;
+        }
+    }
 }
