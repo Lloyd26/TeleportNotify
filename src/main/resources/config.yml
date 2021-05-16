@@ -2,6 +2,9 @@ config:
   broadcast-to-console: true
 
 messages:
+  theme:
+    primary-color: YELLOW
+    accent-color: GOLD
   commands:
     tp:
       1player:
