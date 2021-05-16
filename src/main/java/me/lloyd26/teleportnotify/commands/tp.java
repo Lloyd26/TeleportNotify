@@ -51,8 +51,12 @@ public class tp implements CommandExecutor {
                         playerToSend.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player1").replace("%player2%", player2Name).replace("%player%", playerName)));
                         target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player2").replace("%player1%", player1Name).replace("%player%", playerName)));
                         if (player.hasPermission("tpnotify.notify.admin")) {
-                            Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)), "tpnotify.notify.admin");
-                            System.out.println(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                if (p.hasPermission("tpnotify.notify.admin")) {
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                                }
+                            }
+                            Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)));
                         }
                     } else if (args.length == 3) {
                         final double x = args[0].startsWith("~") ? player.getLocation().getX() + (args[0].length() > 1 ? Double.parseDouble(args[0].substring(1)) : 0) : Double.parseDouble(args[0]);
@@ -68,8 +72,12 @@ public class tp implements CommandExecutor {
                         player.teleport(loc);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.player").replace("%coords%", coords)));
                         if (player.hasPermission("tpnotify.notify.admin")) {
-                            Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)), "tpnotify.ntofiy.admin");
-                            System.out.println(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
+                            for (Player p : Bukkit.getOnlinePlayers()) {
+                                if (p.hasPermission("tpnotify.notify.admin")) {
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
+                                }
+                            }
+                            Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
                         }
                     }
                 } catch (NullPointerException e) {
