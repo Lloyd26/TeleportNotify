@@ -24,7 +24,7 @@ public class tp implements CommandExecutor {
             String playerName = player.getName();
             if (player.hasPermission("tpnotify.tp.use")) {
                 if (args.length == 0) {
-                    player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z>"));
+                    player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z> [yaw] [pitch]"));
                 } else if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                     if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
@@ -63,27 +63,37 @@ public class tp implements CommandExecutor {
                         } else {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[1])));
                         }
-                    } else if (args.length == 3) {
-                        final double x = args[0].startsWith("~") ? player.getLocation().getX() + (args[0].length() > 1 ? Double.parseDouble(args[0].substring(1)) : 0) : Double.parseDouble(args[0]);
-                        final double y = args[1].startsWith("~") ? player.getLocation().getY() + (args[1].length() > 1 ? Double.parseDouble(args[1].substring(1)) : 0) : Double.parseDouble(args[1]);
-                        final double z = args[2].startsWith("~") ? player.getLocation().getZ() + (args[2].length() > 1 ? Double.parseDouble(args[2].substring(1)) : 0) : Double.parseDouble(args[2]);
-                        Location loc = new Location(player.getWorld(), x, y, z, player.getLocation().getYaw(), player.getLocation().getPitch());
-                        String coordsX, coordsY, coordsZ;
-                        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                        coordsX = decimalFormat.format(x);
-                        coordsY = decimalFormat.format(y);
-                        coordsZ = decimalFormat.format(z);
-                        String coords = coordsX + " " + coordsY + " " + coordsZ;
-                        player.teleport(loc);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.player").replace("%coords%", coords)));
-                        if (player.hasPermission("tpnotify.notify.admin")) {
-                            for (Player p : Bukkit.getOnlinePlayers()) {
-                                if (p.hasPermission("tpnotify.notify.admin")) {
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
-                                }
+                    } else {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
+                    }
+                } else if (args.length == 3 || args.length == 5) {
+                    final double x = args[0].startsWith("~") ? player.getLocation().getX() + (args[0].length() > 1 ? Double.parseDouble(args[0].substring(1)) : 0) : Double.parseDouble(args[0]);
+                    final double y = args[1].startsWith("~") ? player.getLocation().getY() + (args[1].length() > 1 ? Double.parseDouble(args[1].substring(1)) : 0) : Double.parseDouble(args[1]);
+                    final double z = args[2].startsWith("~") ? player.getLocation().getZ() + (args[2].length() > 1 ? Double.parseDouble(args[2].substring(1)) : 0) : Double.parseDouble(args[2]);
+                    final float yaw;
+                    final float pitch;
+                    Location loc = new Location(player.getWorld(), x, y, z, player.getLocation().getYaw(), player.getLocation().getPitch());
+                    if (args.length == 5) {
+                        yaw = args[3].startsWith("~") ? player.getLocation().getYaw() + (args[3].length() > 1 ? Float.parseFloat(args[3].substring(1)) : 0) : Float.parseFloat(args[3]);
+                        pitch = args[4].startsWith("~") ? player.getLocation().getPitch() + (args[4].length() > 1 ? Float.parseFloat(args[4].substring(1)) : 0) : Float.parseFloat(args[4]);
+                        loc.setYaw(yaw);
+                        loc.setPitch(pitch);
+                    }
+                    String coordsX, coordsY, coordsZ;
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    coordsX = decimalFormat.format(x);
+                    coordsY = decimalFormat.format(y);
+                    coordsZ = decimalFormat.format(z);
+                    String coords = coordsX + " " + coordsY + " " + coordsZ;
+                    player.teleport(loc);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.player").replace("%coords%", coords)));
+                    if (player.hasPermission("tpnotify.notify.admin")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (p.hasPermission("tpnotify.notify.admin")) {
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
                             }
-                            Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
                         }
+                        Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
                     }
                 } else {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
