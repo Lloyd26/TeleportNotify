@@ -23,10 +23,10 @@ public class tp implements CommandExecutor {
             Player player = (Player) sender;
             String playerName = player.getName();
             if (player.hasPermission("tpnotify.tp.use")) {
-                if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
-                    if (args.length == 0) {
-                        player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z>"));
-                    } else if (args.length == 1) {
+                if (args.length == 0) {
+                    player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z>"));
+                } else if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
+                    if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
                         String targetName = target.getName();
                         player.teleport(target.getLocation());
