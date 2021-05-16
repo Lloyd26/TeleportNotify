@@ -23,7 +23,7 @@ public class tp implements CommandExecutor {
             Player player = (Player) sender;
             String playerName = player.getName();
             if (player.hasPermission("tpnotify.tp.use")) {
-                try {
+                if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                     if (args.length == 0) {
                         player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z>"));
                     } else if (args.length == 1) {
@@ -44,20 +44,24 @@ public class tp implements CommandExecutor {
                         }
                     } else if (args.length == 2) {
                         Player playerToSend = Bukkit.getPlayer(args[0]);
-                        Player target = Bukkit.getPlayer(args[1]);
-                        String player1Name = playerToSend.getName();
-                        String player2Name = target.getName();
-                        playerToSend.teleport(target.getLocation());
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player").replace("%player1%", player1Name).replace("%player2%", player2Name)));
-                        playerToSend.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player1").replace("%player2%", player2Name).replace("%player%", playerName)));
-                        target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player2").replace("%player1%", player1Name).replace("%player%", playerName)));
-                        if (player.hasPermission("tpnotify.notify.admin")) {
-                            for (Player p : Bukkit.getOnlinePlayers()) {
-                                if (p.hasPermission("tpnotify.notify.admin")) {
-                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                        if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[1]))) {
+                            Player target = Bukkit.getPlayer(args[1]);
+                            String player1Name = playerToSend.getName();
+                            String player2Name = target.getName();
+                            playerToSend.teleport(target.getLocation());
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player").replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                            playerToSend.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player1").replace("%player2%", player2Name).replace("%player%", playerName)));
+                            target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player2").replace("%player1%", player1Name).replace("%player%", playerName)));
+                            if (player.hasPermission("tpnotify.notify.admin")) {
+                                for (Player p : Bukkit.getOnlinePlayers()) {
+                                    if (p.hasPermission("tpnotify.notify.admin")) {
+                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                                    }
                                 }
+                                Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)));
                             }
-                            Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", playerName).replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                        } else {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[1])));
                         }
                     } else if (args.length == 3) {
                         final double x = args[0].startsWith("~") ? player.getLocation().getX() + (args[0].length() > 1 ? Double.parseDouble(args[0].substring(1)) : 0) : Double.parseDouble(args[0]);
@@ -81,7 +85,7 @@ public class tp implements CommandExecutor {
                             Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.staff").replace("%player%", playerName).replace("%coords%", coords)));
                         }
                     }
-                } catch (NullPointerException e) {
+                } else {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
                 }
             } else {
