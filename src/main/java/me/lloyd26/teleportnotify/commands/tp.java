@@ -92,7 +92,7 @@ public class tp implements CommandExecutor {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.NOPERMISSION)));
             }
         } else {
-            sender.sendMessage("You need to be a player to execute this command!");
+            sender.sendMessage(Utils.getErrorMessage(Error.PLAYERSONLY));
         }
         return true;
     }
