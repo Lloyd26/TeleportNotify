@@ -24,10 +24,7 @@ public class tp implements CommandExecutor {
             if (player.hasPermission("tpnotify.tp.use")) {
                 try {
                     if (args.length == 0) {
-                        player.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.RED + "Too few arguments!");
-                        player.sendMessage(ChatColor.RED + "Usages:");
-                        player.sendMessage(ChatColor.RED + " - /tp <player>");
-                        player.sendMessage(ChatColor.RED + " - /tp <player1> <player2>");
+                        player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z>"));
                     } else if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
                         String targetName = target.getName();
