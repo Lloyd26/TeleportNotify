@@ -132,7 +132,7 @@ public class TeleportUtil {
                 Utils.broadcastToConsole(staffMessage);
             }
         } else {
-            getExecutor().sendMessage(Utils.setUsage("/teleport <x> <y> <z> [yaw] [pitch]"));
+            getExecutor().sendMessage(Utils.setUsage("/teleport [player] <x> <y> <z> [yaw] [pitch]"));
         }
     }
 }

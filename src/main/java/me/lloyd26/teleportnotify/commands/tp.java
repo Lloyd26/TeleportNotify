@@ -25,7 +25,7 @@ public class tp implements CommandExecutor {
             String playerName = player.getName();
             if (player.hasPermission("tpnotify.tp.use")) {
                 if (args.length == 0) {
-                    player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z> [yaw] [pitch]"));
+                    player.sendMessage(Utils.setUsage("/teleport <player> [player] / [player] <x> <y> <z> [yaw] [pitch]"));
                 } else if (args.length == 1 || args.length == 2) {
                     if (args.length == 1 && Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                         Player target = Bukkit.getPlayer(args[0]);
