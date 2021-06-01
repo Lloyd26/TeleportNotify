@@ -17,7 +17,6 @@ public final class TeleportNotify extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("TeleportNotify enabled!");
-        //Bukkit.broadcastMessage(ChatColor.GREEN + "Plugin loaded!");
 
         // Config
         getConfig().options().copyDefaults();
@@ -28,9 +27,6 @@ public final class TeleportNotify extends JavaPlugin {
         getCommand("tp").setExecutor(new tp());
         getCommand("tphere").setExecutor(new tphere());
         getCommand("tpall").setExecutor(new tpall());
-
-        // Listeners
-        //getServer().getPluginManager().registerEvents(new StaffWorldChangeEvent(), this);
 
         // Metrics
         int pluginId = 11255;
