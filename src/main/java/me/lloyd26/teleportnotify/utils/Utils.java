@@ -51,4 +51,10 @@ public class Utils {
                 return null;
         }
     }
+
+    public static boolean isValidCoord(String strNum) {
+        final Pattern pattern = Pattern.compile("~|~?-?\\d+(\\.\\d+)?");
+
+        return strNum != null && pattern.matcher(strNum).matches();
+    }
 }
