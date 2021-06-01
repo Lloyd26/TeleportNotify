@@ -4,6 +4,8 @@ import me.lloyd26.teleportnotify.commands.tp;
 import me.lloyd26.teleportnotify.commands.tphere;
 import me.lloyd26.teleportnotify.commands.tpall;
 import me.lloyd26.teleportnotify.commands.tpnotify;
+import me.lloyd26.teleportnotify.utils.UpdateChecker;
+import me.lloyd26.teleportnotify.utils.Utils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,6 +35,15 @@ public final class TeleportNotify extends JavaPlugin {
         // Metrics
         int pluginId = 11255;
         Metrics metrics = new Metrics(this, pluginId);
+
+        new UpdateChecker(this, 90803).getVersion(version -> {
+            if (!this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                Bukkit.getConsoleSender().sendMessage("[TeleportNotify] " + Utils.getAccentColor() + "TeleportNotify " + Utils.getPrimaryColor() + "has an update available!");
+            } else {
+                Bukkit.getConsoleSender().sendMessage("[TeleportNotify] " + Utils.getPrimaryColor() + "You are running the " + Utils.getAccentColor() + "latest " + Utils.getPrimaryColor() + "version!");
+            }
+        });
+
     }
 
     @Override
