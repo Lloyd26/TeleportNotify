@@ -2,6 +2,7 @@ package me.lloyd26.teleportnotify.commands;
 
 import me.lloyd26.teleportnotify.TeleportNotify;
 import me.lloyd26.teleportnotify.utils.Error;
+import me.lloyd26.teleportnotify.utils.TeleportUtil;
 import me.lloyd26.teleportnotify.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -66,8 +67,28 @@ public class tp implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
                     }
-                } else if (args.length == 3 || args.length == 5) {
-                    if (Utils.isValidCoord(args[0]) && Utils.isValidCoord(args[1]) && Utils.isValidCoord(args[2])) {
+                } else if (args.length == 3 || args.length == 5 || args.length == 4 || args.length == 6) {
+                    TeleportUtil teleportUtil = new TeleportUtil(player, player, args[0], args[1], args[2]);
+                    if (args.length == 5) {
+                        teleportUtil.setYaw(args[3]);
+                        teleportUtil.setPitch(args[4]);
+                    } else if (args.length == 4 || args.length == 6) {
+                        if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
+                            teleportUtil.setPlayer(Bukkit.getPlayer(args[0]));
+                            teleportUtil.setX(args[1]);
+                            teleportUtil.setY(args[2]);
+                            teleportUtil.setZ(args[3]);
+                            if (args.length == 6) {
+                                teleportUtil.setYaw(args[4]);
+                                teleportUtil.setPitch(args[5]);
+                            }
+                        } else {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
+                            return true;
+                        }
+                    }
+                    teleportUtil.teleportPlayer();
+                    /*if (Utils.isValidCoord(args[0]) && Utils.isValidCoord(args[1]) && Utils.isValidCoord(args[2])) {
                         final double x = args[0].startsWith("~") ? player.getLocation().getX() + (args[0].length() > 1 ? Double.parseDouble(args[0].substring(1)) : 0) : Double.parseDouble(args[0]);
                         final double y = args[1].startsWith("~") ? player.getLocation().getY() + (args[1].length() > 1 ? Double.parseDouble(args[1].substring(1)) : 0) : Double.parseDouble(args[1]);
                         final double z = args[2].startsWith("~") ? player.getLocation().getZ() + (args[2].length() > 1 ? Double.parseDouble(args[2].substring(1)) : 0) : Double.parseDouble(args[2]);
@@ -102,7 +123,7 @@ public class tp implements CommandExecutor {
                         }
                     } else {
                         player.sendMessage(Utils.setUsage("/teleport <x> <y> <z> [yaw] [pitch]"));
-                    }
+                    }*/
                 } else {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[0])));
                 }
