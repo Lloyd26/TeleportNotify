@@ -17,8 +17,13 @@ messages:
         player2: '&6%player1% &ewas teleported to you by &6%player%&e.'
         staff: '&7&o[%player%: &eteleported %player1% to %player2%&7&o]'
       coords:
-        player: '&eYou''ve teleported to &6%coords%&e.'
-        staff: '&7&o[%player%: &eteleported to %coords%&7&o]'
+        self:
+          player: '&eYou''ve teleported to &6%coords%&e.'
+          staff: '&7&o[%player%: &eteleported to %coords%&7&o]'
+        other:
+          player: '&eYou''ve teleported &6%player% &eto &6%coords%&e.'
+          target: '&6%player% &eteleported you to &6%coords%&e.'
+          staff: '&7&o[%player%: &eteleported %target% to %coords%&7&o]'
     tphere:
       player: '&eYou''ve teleported &6%target% &eto &6you&e.'
       target: '&eYou were teleported to &6%player%'
