@@ -25,8 +25,8 @@ public class tp implements CommandExecutor {
             if (player.hasPermission("tpnotify.tp.use")) {
                 if (args.length == 0) {
                     player.sendMessage(Utils.setUsage("/teleport <player> [player] / <x> <y> <z> [yaw] [pitch]"));
-                } else if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
-                    if (args.length == 1) {
+                } else if (args.length == 1 || args.length == 2) {
+                    if (args.length == 1 && Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                         Player target = Bukkit.getPlayer(args[0]);
                         String targetName = target.getName();
                         player.teleport(target.getLocation());
@@ -42,7 +42,7 @@ public class tp implements CommandExecutor {
                             }
                             Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.1player.staff").replace("%player%", playerName).replace("%target%", targetName)));
                         }
-                    } else if (args.length == 2) {
+                    } else if (args.length == 2 && Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                         Player playerToSend = Bukkit.getPlayer(args[0]);
                         if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[1]))) {
                             Player target = Bukkit.getPlayer(args[1]);
