@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class tpall implements CommandExecutor {
@@ -32,7 +33,7 @@ public class tpall implements CommandExecutor {
                         TeleportUtil teleportUtil = new TeleportUtil(sender, Bukkit.getOnlinePlayers(), player.getLocation());
                         teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tpall.other.player").replace("%target%", player.getName()));
                         teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tpall.other.target").replace("%player%", player.getName()));
-                        teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tpall.other.staff").replace("%player%", sender.getName()).replace("%target%", player.getName()));
+                        teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tpall.other.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%target%", player.getName()));
                         teleportUtil.teleportPlayer();
                     } else {
                         sender.sendMessage(Utils.getErrorMessage(Error.PLAYERNOTFOUND, args[0]));

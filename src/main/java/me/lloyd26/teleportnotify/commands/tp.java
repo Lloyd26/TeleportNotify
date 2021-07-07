@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class tp implements CommandExecutor {
@@ -48,15 +49,15 @@ public class tp implements CommandExecutor {
                             String player2Name = target.getName();
                             playerToSend.teleport(target.getLocation());
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player").replace("%player1%", player1Name).replace("%player2%", player2Name)));
-                            playerToSend.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player1").replace("%player2%", player2Name).replace("%player%", sender.getName())));
-                            target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player2").replace("%player1%", player1Name).replace("%player%", sender.getName())));
+                            playerToSend.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player1").replace("%player2%", player2Name).replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName()))));
+                            target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.player2").replace("%player1%", player1Name).replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName()))));
                             if (sender.hasPermission("tpnotify.notify.admin")) {
                                 for (Player p : Bukkit.getOnlinePlayers()) {
                                     if (p.hasPermission("tpnotify.notify.admin")) {
-                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", sender.getName()).replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%player1%", player1Name).replace("%player2%", player2Name)));
                                     }
                                 }
-                                Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", sender.getName()).replace("%player1%", player1Name).replace("%player2%", player2Name)));
+                                Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%player1%", player1Name).replace("%player2%", player2Name)));
                             }
                         } else {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERNOTFOUND).replace("%player%", args[1])));
@@ -83,8 +84,8 @@ public class tp implements CommandExecutor {
                                 teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.staff").replace("%player%", sender.getName()));
                             } else {
                                 teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.player").replace("%player%", Bukkit.getPlayer(args[0]).getName()));
-                                teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.target").replace("%player%", sender.getName()));
-                                teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.staff").replace("%player%", sender.getName()).replace("%target%", Bukkit.getPlayer(args[0]).getName()));
+                                teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.target").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
+                                teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%target%", Bukkit.getPlayer(args[0]).getName()));
                             }
                             if (args.length == 6) {
                                 teleportUtil.setYaw(args[4]);

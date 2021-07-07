@@ -1,5 +1,6 @@
 config:
   broadcast-to-console: true
+  Console-name: "Console"
 
 messages:
   theme:

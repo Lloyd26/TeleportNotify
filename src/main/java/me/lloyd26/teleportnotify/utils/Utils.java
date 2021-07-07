@@ -70,4 +70,8 @@ public class Utils {
 
         return strNum != null && pattern.matcher(strNum).matches();
     }
+
+    public static String getConsoleName() {
+        return plugin.getConfig().getString("config.Console-name");
+    }
 }
