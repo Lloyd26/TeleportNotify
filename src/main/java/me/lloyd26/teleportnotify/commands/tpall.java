@@ -6,7 +6,6 @@ import me.lloyd26.teleportnotify.utils.TeleportUtil;
 import me.lloyd26.teleportnotify.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,27 +17,12 @@ public class tpall implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        /*if (sender instanceof Player) {
-            Player player = (Player) sender;
-            String playerName = player.getName();*/
             if (sender.hasPermission("tpnotify.tpall.use")) {
                 if (sender instanceof Player && args.length == 0) {
                     Player player = (Player) sender;
                     TeleportUtil teleportUtil = new TeleportUtil(sender, Bukkit.getOnlinePlayers(), player.getLocation());
                     teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tpall.self.target").replace("%player%", player.getName()));
                     teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tpall.self.staff").replace("%player%", player.getName()));
-                    /*for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.teleport(player.getLocation());
-                        if (p.hasPermission("tpnotify.notify.admin")) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tpall.target").replaceAll("%player%", playerName)));
-                        }
-                    }*/
-                    /*if (player.hasPermission("tpnotify.notify.admin")) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tpall.staff").replaceAll("%player%", playerName)));
-                        }
-                        Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tpall.staff").replaceAll("%player%", playerName)));
-                    }*/
                     teleportUtil.teleportPlayer();
                 } else if (args.length == 0) {
                     sender.sendMessage(Utils.setUsage("/teleportall <player> / <x> <y> <z> [<yaw> <pitch>]"));
@@ -69,7 +53,6 @@ public class tpall implements CommandExecutor {
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.NOPERMISSION)));
             }
-            //TeleportUtil teleportUtil = new TeleportUtil(sender, Bukkit.getOnlinePlayers(), Bukkit.getPlayer().getLocation());
         return true;
     }
 }

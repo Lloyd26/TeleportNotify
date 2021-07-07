@@ -6,13 +6,10 @@ import me.lloyd26.teleportnotify.utils.TeleportUtil;
 import me.lloyd26.teleportnotify.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.text.DecimalFormat;
 
 public class tp implements CommandExecutor {
 
@@ -20,9 +17,6 @@ public class tp implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //if (sender instanceof Player) {
-            //Player player = (Player) sender;
-            //String playerName = player.getName();
             if (sender.hasPermission("tpnotify.tp.use")) {
                 if (args.length == 0) {
                     sender.sendMessage(Utils.setUsage("/teleport <player> " + (sender instanceof Player ? "[player] / [player]" : "<target> / <player>") + " <x> <y> <z> [<yaw> <pitch>]"));
@@ -104,9 +98,6 @@ public class tp implements CommandExecutor {
                     if ((args.length == 3 || args.length == 5) && !(sender instanceof Player)) {
                         sender.sendMessage(Utils.setUsage("/teleport <player> <x> <y> <z> [<yaw> <pitch>]"));
                     } else {
-                        /*teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.player"));
-                        teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.target").replace("%player%", sender.getName()));
-                        teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.staff").replace());*/
                         teleportUtil.teleportPlayer();
                     }
                 } else {
@@ -115,9 +106,6 @@ public class tp implements CommandExecutor {
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.NOPERMISSION)));
             }
-        /*} else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Utils.getErrorMessage(Error.PLAYERSONLY)));
-        }*/
         return true;
     }
 }

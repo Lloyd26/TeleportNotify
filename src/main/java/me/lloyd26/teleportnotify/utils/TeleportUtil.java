@@ -105,15 +105,8 @@ public class TeleportUtil {
     public Collection<? extends Player> getOnlinePlayers() { return onlinePlayers; }
 
     public TeleportUtil(CommandSender executor, Player player, String x, String y, String z) {
-        /*this.executor = executor;
-        this.player = player;
-        this.x = x;
-        this.y = y;
-        this.z = z;*/
         this(executor, x, y, z);
         this.player = player;
-        //this.yaw = String.valueOf(getPlayer().getLocation().getYaw());
-        //this.pitch = String.valueOf(getPlayer().getLocation().getPitch());
     }
 
     public TeleportUtil(CommandSender executor, Player player, String x, String y, String z, String yaw, String pitch) {
@@ -178,25 +171,6 @@ public class TeleportUtil {
                         p.teleport(loc);
                     }
                 }
-                String playerMessage, targetMessage, staffMessage;
-                /*if (getPlayer().getName().equalsIgnoreCase(getExecutor().getName())) {
-                    playerMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.self.player").replace("%coords%", coords));
-                    staffMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.self.staff").replace("%player%", getPlayer().getName()).replace("%coords%", coords));
-                } else {
-                    playerMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.other.player").replace("%player%", getPlayer().getName()).replace("%coords%", coords));
-                    targetMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.other.target")).replace("%player%", getExecutor().getName()).replace("%coords%", coords);
-                    staffMessage = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tp.coords.other.staff").replace("%player%", getExecutor().getName()).replace("%target%", getPlayer().getName()).replace("%coords%", coords));
-                    if (getPlayer().hasPermission("tpnotify.notify.admin")) getPlayer().sendMessage(targetMessage);
-                }
-                getExecutor().sendMessage(playerMessage);
-                if (getExecutor().hasPermission("tpnotify.notify.admin")) {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (p.hasPermission("tpnotify.notify.admin")) {
-                            p.sendMessage(staffMessage);
-                        }
-                    }
-                    Utils.broadcastToConsole(staffMessage);
-                }*/
                 if (getExecutor().hasPermission("tpnotify.notify.admin")) {
                     if (getPlayerMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage().replace("%coords%", coords)));
                     if (getPlayer() != null) {
