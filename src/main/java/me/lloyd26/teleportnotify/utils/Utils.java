@@ -42,11 +42,24 @@ public class Utils {
     public static String getErrorMessage(Error error) {
         switch (error) {
             case PLAYERNOTFOUND:
-                return plugin.getConfig().getString("messages.errors.PlayerNotFound");
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.PlayerNotFound"));
             case NOPERMISSION:
-                return plugin.getConfig().getString("messages.errors.NoPermission");
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.NoPermission"));
             case PLAYERSONLY:
-                return plugin.getConfig().getString("messages.errors.PlayersOnly");
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.PlayersOnly"));
+            default:
+                return null;
+        }
+    }
+
+    public static String getErrorMessage(Error error, String... args) {
+        switch (error) {
+            case PLAYERNOTFOUND:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.PlayerNotFound").replace("%player%", args[0]));
+            case NOPERMISSION:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.NoPermission"));
+            case PLAYERSONLY:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.PlayersOnly"));
             default:
                 return null;
         }
