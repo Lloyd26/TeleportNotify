@@ -31,6 +31,7 @@ messages:
       staff: '&7&o[%player%: &eteleported %target% to %player%&7&o]'
     tpall:
       self:
+        player: '&eYou''ve teleported &6all players &eto &6you&e.'
         target: '&eAll players were teleported to &6%player%&e.'
         staff: '&7&o[%player%: &eteleported all players to %player%&7&o]'
       other:
