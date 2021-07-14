@@ -28,12 +28,12 @@ public class tphere implements CommandExecutor {
                         String targetName = target.getName();
                         target.teleport(player.getLocation());
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.player").replaceAll("%target%", targetName)));
-                        if (target.hasPermission("tpnotify.notify.admin")) {
+                        if (target.hasPermission("tpnotify.notify.receive")) {
                             target.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.target").replaceAll("%player%", playerName)));
                         }
-                        if (player.hasPermission("tpnotify.notify.admin")) {
+                        if (player.hasPermission("tpnotify.notify.notify")) {
                             for (Player p : Bukkit.getOnlinePlayers()) {
-                                if (p.hasPermission("tpnotify.notify.admin")) {
+                                if (p.hasPermission("tpnotify.notify.receive")) {
                                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", targetName)));
                                 }
                             }
