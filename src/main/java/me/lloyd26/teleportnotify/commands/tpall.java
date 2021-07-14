@@ -27,7 +27,7 @@ public class tpall implements CommandExecutor {
                     teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tpall.self.staff").replace("%player%", player.getName()));
                     teleportUtil.teleportPlayer();
                 } else if (args.length == 0) {
-                    sender.sendMessage(Utils.setUsage("/teleportall <player> / <x> <y> <z> [<yaw> <pitch>]"));
+                    sender.sendMessage(Utils.setUsage("/teleportall <player>"));
                 } else if (args.length == 1) {
                     if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                         Player player = Bukkit.getPlayer(args[0]);

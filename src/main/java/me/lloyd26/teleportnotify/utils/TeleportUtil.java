@@ -186,7 +186,7 @@ public class TeleportUtil {
                     Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', getStaffMessage().replace("%coords%", coords)));
                 }
             } else {
-                getExecutor().sendMessage(Utils.setUsage("/teleport [player] <x> <y> <z> [yaw] [pitch]"));
+                getExecutor().sendMessage(Utils.setUsage("/teleport [player] <x> <y> <z> [<yaw> <pitch>]"));
             }
         } else {
             if (getPlayer() != null) {
