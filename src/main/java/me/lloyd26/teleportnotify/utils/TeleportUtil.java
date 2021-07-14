@@ -171,16 +171,15 @@ public class TeleportUtil {
                         p.teleport(loc);
                     }
                 }
-                if (getExecutor().hasPermission("tpnotify.notify.admin")) {
-                    if (getPlayerMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage().replace("%coords%", coords)));
+                if (getPlayerMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage().replace("%coords%", coords)));
+                if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                     if (getPlayer() != null) {
-                        if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.admin")) {
+                        if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
                             getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage().replace("%coords%", coords)));
                         }
                     }
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        if (p.hasPermission("tpnotify.notify.admin")) {
-                            if (!p.getName().equals(getExecutor().getName())) p.sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage().replace("%coords%", coords)));
+                        if (p.hasPermission("tpnotify.notify.receive")) {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage().replace("%coords%", coords)));
                         }
                     }
@@ -197,15 +196,15 @@ public class TeleportUtil {
                     p.teleport(getLocation());
                 }
             }
-            if (getExecutor().hasPermission("tpnotify.notify.admin")) {
-                if (getPlayerMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
+            if (getPlayerMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
+            if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                 if (getPlayer() != null) {
-                    if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.admin")) {
+                    if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
                         getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
                     }
                 }
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasPermission("tpnotify.notify.admin")) {
+                    if (p.hasPermission("tpnotify.notify.receive")) {
                         if (!p.getName().equals(getExecutor().getName())) p.sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
                     }
