@@ -23,10 +23,13 @@ public class TeleportUtil {
     String pitch;
     Location location;
     String usage;
+    String executorMessage;
     String playerMessage;
     String targetMessage;
     String staffMessage;
     Collection<? extends Player> onlinePlayers;
+    Player playerToSend;
+    Player playerToReceive;
 
     public CommandSender getExecutor() {
         return executor;
@@ -90,6 +93,10 @@ public class TeleportUtil {
 
     public void setUsage(String usage) { this.usage = usage; }
 
+    public String getExecutorMessage() { return executorMessage; }
+
+    public void setExecutorMessage(String executorMessage) { this.executorMessage = executorMessage; }
+
     public String getPlayerMessage() { return playerMessage; }
 
     public void setPlayerMessage(String playerMessage) { this.playerMessage = playerMessage; }
@@ -103,6 +110,14 @@ public class TeleportUtil {
     public void setStaffMessage(String staffMessage) { this.staffMessage = staffMessage; }
 
     public Collection<? extends Player> getOnlinePlayers() { return onlinePlayers; }
+
+    public Player getPlayerToSend() { return playerToSend; }
+
+    public void setPlayerToSend(Player playerToSend) { this.playerToSend = playerToSend; }
+
+    public Player getPlayerToReceive() { return playerToReceive; }
+
+    public void setPlayerToReceive(Player playerToReceive) { this.playerToReceive = playerToReceive; }
 
     public TeleportUtil(CommandSender executor, Player player, String x, String y, String z) {
         this(executor, x, y, z);
@@ -145,67 +160,96 @@ public class TeleportUtil {
         this.onlinePlayers = onlinePlayers;
     }
 
+    public TeleportUtil(CommandSender executor, Player playerToSend, Player playerToReceive) {
+        this.executor = executor;
+        this.playerToSend = playerToSend;
+        this.playerToReceive = playerToReceive;
+    }
+
     public void teleportPlayer() {
-        if (getLocation() == null) {
-            if (Utils.isValidCoord(getX()) && Utils.isValidCoord(getY()) && Utils.isValidCoord(getZ())) {
-                final double coordX = getX().startsWith("~") ? ((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getX()) + (getX().length() > 1 ? Double.parseDouble(getX().substring(1)) : 0) : Double.parseDouble(getX());
-                final double coordY = getY().startsWith("~") ? ((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getY()) + (getY().length() > 1 ? Double.parseDouble(getY().substring(1)) : 0) : Double.parseDouble(getY());
-                final double coordZ = getZ().startsWith("~") ? ((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getZ()) + (getZ().length() > 1 ? Double.parseDouble(getZ().substring(1)) : 0) : Double.parseDouble(getZ());
-                Location loc = new Location((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getWorld(), coordX, coordY, coordZ, (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getYaw(), (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getPitch());
-                if (getYaw() != null && getPitch() != null && Utils.isValidCoord(getYaw()) && Utils.isValidCoord(getPitch())) {
-                    final float coordYaw = getYaw().startsWith("~") ? (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getYaw() + (getYaw().length() > 1 ? Float.parseFloat(getYaw().substring(1)) : 0) : Float.parseFloat(getYaw());
-                    final float coordPitch = getPitch().startsWith("~") ? (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getPitch() + (getPitch().length() > 1 ? Float.parseFloat(getPitch().substring(1)) : 0) : Float.parseFloat(getPitch());
-                    loc.setYaw(coordYaw);
-                    loc.setPitch(coordPitch);
+        if (getPlayerToSend() == null && getPlayerToReceive() == null) {
+            if (getLocation() == null) {
+                if (Utils.isValidCoord(getX()) && Utils.isValidCoord(getY()) && Utils.isValidCoord(getZ())) {
+                    final double coordX = getX().startsWith("~") ? ((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getX()) + (getX().length() > 1 ? Double.parseDouble(getX().substring(1)) : 0) : Double.parseDouble(getX());
+                    final double coordY = getY().startsWith("~") ? ((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getY()) + (getY().length() > 1 ? Double.parseDouble(getY().substring(1)) : 0) : Double.parseDouble(getY());
+                    final double coordZ = getZ().startsWith("~") ? ((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getZ()) + (getZ().length() > 1 ? Double.parseDouble(getZ().substring(1)) : 0) : Double.parseDouble(getZ());
+                    Location loc = new Location((getPlayer() != null ? getPlayer() : (Player) getExecutor()).getWorld(), coordX, coordY, coordZ, (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getYaw(), (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getPitch());
+                    if (getYaw() != null && getPitch() != null && Utils.isValidCoord(getYaw()) && Utils.isValidCoord(getPitch())) {
+                        final float coordYaw = getYaw().startsWith("~") ? (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getYaw() + (getYaw().length() > 1 ? Float.parseFloat(getYaw().substring(1)) : 0) : Float.parseFloat(getYaw());
+                        final float coordPitch = getPitch().startsWith("~") ? (getPlayer() != null ? getPlayer() : (Player) getExecutor()).getLocation().getPitch() + (getPitch().length() > 1 ? Float.parseFloat(getPitch().substring(1)) : 0) : Float.parseFloat(getPitch());
+                        loc.setYaw(coordYaw);
+                        loc.setPitch(coordPitch);
+                    }
+                    String coordsX, coordsY, coordsZ;
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    coordsX = decimalFormat.format(coordX);
+                    coordsY = decimalFormat.format(coordY);
+                    coordsZ = decimalFormat.format(coordZ);
+                    String coords = coordsX + " " + coordsY + " " + coordsZ;
+                    if (getPlayer() != null) {
+                        getPlayer().teleport(loc);
+                    } else if (getOnlinePlayers() != null) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.teleport(loc);
+                        }
+                    }
+                    if (getPlayerMessage() != null)
+                        getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage().replace("%coords%", coords)));
+                    if (getExecutor().hasPermission("tpnotify.notify.notify")) {
+                        if (getPlayer() != null) {
+                            if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
+                                getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage().replace("%coords%", coords)));
+                            }
+                        }
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (p.hasPermission("tpnotify.notify.receive")) {
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage().replace("%coords%", coords)));
+                            }
+                        }
+                        Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', getStaffMessage().replace("%coords%", coords)));
+                    }
+                } else {
+                    getExecutor().sendMessage(Utils.setUsage("/teleport [player] <x> <y> <z> [<yaw> <pitch>]"));
                 }
-                String coordsX, coordsY, coordsZ;
-                DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                coordsX = decimalFormat.format(coordX);
-                coordsY = decimalFormat.format(coordY);
-                coordsZ = decimalFormat.format(coordZ);
-                String coords = coordsX + " " + coordsY + " " + coordsZ;
+            } else {
                 if (getPlayer() != null) {
-                    getPlayer().teleport(loc);
+                    getPlayer().teleport(getLocation());
                 } else if (getOnlinePlayers() != null) {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.teleport(loc);
+                    for (Player p : getOnlinePlayers()) {
+                        p.teleport(getLocation());
                     }
                 }
-                if (getPlayerMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage().replace("%coords%", coords)));
+                if (getPlayerMessage() != null)
+                    getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
                 if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                     if (getPlayer() != null) {
                         if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
-                            getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage().replace("%coords%", coords)));
+                            getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
                         }
                     }
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (p.hasPermission("tpnotify.notify.receive")) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage().replace("%coords%", coords)));
+                            if (!p.getName().equals(getExecutor().getName()))
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
                         }
                     }
-                    Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', getStaffMessage().replace("%coords%", coords)));
-                }
-            } else {
-                getExecutor().sendMessage(Utils.setUsage("/teleport [player] <x> <y> <z> [<yaw> <pitch>]"));
-            }
-        } else {
-            if (getPlayer() != null) {
-                getPlayer().teleport(getLocation());
-            } else if (getOnlinePlayers() != null) {
-                for (Player p : getOnlinePlayers()) {
-                    p.teleport(getLocation());
+                    Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
                 }
             }
-            if (getPlayerMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
+        }
+        if (getPlayerToSend() != null && getPlayerToReceive() != null) {
+            getPlayerToSend().teleport(getPlayerToReceive().getLocation());
+            if (getExecutorMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage()));
+            if (getPlayerMessage() != null && getPlayerToSend().hasPermission("tpnotify.notify.receive")) getPlayerToSend().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
             if (getExecutor().hasPermission("tpnotify.notify.notify")) {
-                if (getPlayer() != null) {
-                    if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
-                        getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
-                    }
+                if (getTargetMessage() != null && getPlayerToReceive().hasPermission("tpnotify.notify.receive")) {
+                    getPlayerToReceive().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
                 }
+            }
+            if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (p.hasPermission("tpnotify.notify.receive")) {
-                        if (!p.getName().equals(getExecutor().getName())) p.sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
                     }
                 }
