@@ -1,6 +1,7 @@
 config:
   broadcast-to-console: true
   Console-name: "Console"
+  allow-self-teleport: false
 
 messages:
   theme:
@@ -46,3 +47,4 @@ messages:
     PlayerNotFound: "&cNo player matching &e%player% &cis connected to this server."
     NoPermission: "&cI'm sorry, but you do not have permission to perform this command."
     PlayersOnly: "&cOnly players can execute this command!"
+    SelfTeleport: "&cYou cannot teleport to yourself."

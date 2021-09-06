@@ -239,21 +239,27 @@ public class TeleportUtil {
             }
         }
         if (getPlayerToSend() != null && getPlayerToReceive() != null) {
-            getPlayerToSend().teleport(getPlayerToReceive().getLocation());
-            if (getExecutorMessage() != null) getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage()));
-            if (getPlayerMessage() != null && getPlayerToSend().hasPermission("tpnotify.notify.receive")) getPlayerToSend().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
-            if (getExecutor().hasPermission("tpnotify.notify.notify")) {
-                if (getTargetMessage() != null && getPlayerToReceive().hasPermission("tpnotify.notify.receive")) {
-                    getPlayerToReceive().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
-                }
-            }
-            if (getExecutor().hasPermission("tpnotify.notify.notify")) {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasPermission("tpnotify.notify.receive")) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
+            if (!plugin.getConfig().getBoolean("config.allow-self-teleport") && (getPlayerToSend() != getPlayerToReceive()) ) {
+                getPlayerToSend().teleport(getPlayerToReceive().getLocation());
+                if (getExecutorMessage() != null)
+                    getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage()));
+                if (getPlayerMessage() != null && getPlayerToSend().hasPermission("tpnotify.notify.receive"))
+                    getPlayerToSend().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
+                if (getExecutor().hasPermission("tpnotify.notify.notify")) {
+                    if (getTargetMessage() != null && getPlayerToReceive().hasPermission("tpnotify.notify.receive")) {
+                        getPlayerToReceive().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
                     }
                 }
-                Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
+                if (getExecutor().hasPermission("tpnotify.notify.notify")) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.hasPermission("tpnotify.notify.receive")) {
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
+                        }
+                    }
+                    Utils.broadcastToConsole(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
+                }
+            } else {
+                getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.SelfTeleport")));
             }
         }
     }
