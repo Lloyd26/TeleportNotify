@@ -193,8 +193,8 @@ public class TeleportUtil {
                             p.teleport(loc);
                         }
                     }
-                    if (getPlayerMessage() != null)
-                        getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage().replace("%coords%", coords)));
+                    if (getExecutorMessage() != null)
+                        getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage().replace("%coords%", coords)));
                     if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                         if (getPlayer() != null) {
                             if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
@@ -219,8 +219,8 @@ public class TeleportUtil {
                         p.teleport(getLocation());
                     }
                 }
-                if (getPlayerMessage() != null)
-                    getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
+                if (getExecutorMessage() != null)
+                    getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage()));
                 if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                     if (getPlayer() != null) {
                         if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {

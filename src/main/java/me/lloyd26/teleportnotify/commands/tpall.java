@@ -32,7 +32,7 @@ public class tpall implements CommandExecutor {
                     if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                         Player player = Bukkit.getPlayer(args[0]);
                         TeleportUtil teleportUtil = new TeleportUtil(sender, Bukkit.getOnlinePlayers(), player.getLocation());
-                        teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tpall.other.player").replace("%target%", player.getName()));
+                        teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tpall.other.player").replace("%target%", player.getName()));
                         teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tpall.other.target").replace("%player%", player.getName()));
                         teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tpall.other.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%target%", player.getName()));
                         teleportUtil.teleportPlayer();
@@ -46,7 +46,7 @@ public class tpall implements CommandExecutor {
                             teleportUtil.setYaw(args[3]);
                             teleportUtil.setPitch(args[4]);
                         }
-                        teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tpall.coords.player"));
+                        teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tpall.coords.player"));
                         teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tpall.coords.target"));
                         teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tpall.coords.staff").replace("%player%", sender.getName()));
                         teleportUtil.teleportPlayer();
