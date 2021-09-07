@@ -2,6 +2,7 @@ config:
   broadcast-to-console: true
   Console-name: "Console"
   allow-self-teleport: false
+  teleport-to-center-block: false
 
 messages:
   theme:
