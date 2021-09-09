@@ -50,7 +50,7 @@ public class tp implements CommandExecutor {
                     }
                 } else if (args.length == 3 || args.length == 5 || args.length == 4 || args.length == 6) {
                     TeleportUtil teleportUtil = new TeleportUtil(sender, args[0], args[1], args[2]);
-                    teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.player").replace("%player%", sender.getName()));
+                    teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.player").replace("%player%", sender.getName()));
                     teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.staff").replace("%player%", sender.getName()));
                     if (sender instanceof Player) teleportUtil.setPlayer((Player) sender);
                     if (args.length == 5) {
@@ -63,10 +63,10 @@ public class tp implements CommandExecutor {
                             teleportUtil.setY(args[2]);
                             teleportUtil.setZ(args[3]);
                             if (Bukkit.getPlayer(args[0]).getName().equals(sender.getName())) {
-                                teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.player").replace("%player%", sender.getName()));
+                                teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.player").replace("%player%", sender.getName()));
                                 teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.staff").replace("%player%", sender.getName()));
                             } else {
-                                teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.player").replace("%player%", Bukkit.getPlayer(args[0]).getName()));
+                                teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.player").replace("%player%", Bukkit.getPlayer(args[0]).getName()));
                                 teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.target").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
                                 teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%target%", Bukkit.getPlayer(args[0]).getName()));
                             }

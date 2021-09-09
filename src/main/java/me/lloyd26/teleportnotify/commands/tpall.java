@@ -22,7 +22,7 @@ public class tpall implements CommandExecutor {
                 if (sender instanceof Player && args.length == 0) {
                     Player player = (Player) sender;
                     TeleportUtil teleportUtil = new TeleportUtil(sender, Bukkit.getOnlinePlayers(), player.getLocation());
-                    teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tpall.self.player"));
+                    teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tpall.self.player"));
                     teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tpall.self.target").replace("%player%", player.getName()));
                     teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tpall.self.staff").replace("%player%", player.getName()));
                     teleportUtil.teleportPlayer();
