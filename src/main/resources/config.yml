@@ -3,6 +3,7 @@ config:
   Console-name: "Console"
   allow-self-teleport: false
   teleport-to-center-block: false
+  DecimalFormat: "#.##"
 
 messages:
   theme:

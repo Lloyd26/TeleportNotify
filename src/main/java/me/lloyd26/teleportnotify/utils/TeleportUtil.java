@@ -181,7 +181,7 @@ public class TeleportUtil {
                         loc.setPitch(coordPitch);
                     }
                     String coordsX, coordsY, coordsZ;
-                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                    DecimalFormat decimalFormat = new DecimalFormat(plugin.getConfig().getString("config.DecimalFormat"));
                     coordsX = decimalFormat.format(coordX);
                     coordsY = decimalFormat.format(coordY);
                     coordsZ = decimalFormat.format(coordZ);
