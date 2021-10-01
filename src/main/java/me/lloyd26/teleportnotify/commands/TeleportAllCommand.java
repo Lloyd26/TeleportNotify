@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class tpall implements CommandExecutor {
+public class TeleportAllCommand implements CommandExecutor {
 
     private final TeleportNotify plugin = TeleportNotify.getPlugin(TeleportNotify.class);
 
