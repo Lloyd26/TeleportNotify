@@ -239,7 +239,7 @@ public class TeleportUtil {
             }
         }
         if (getPlayerToSend() != null && getPlayerToReceive() != null) {
-            if (!plugin.getConfig().getBoolean("config.allow-self-teleport") && (getPlayerToSend() != getPlayerToReceive()) ) {
+            if ((plugin.getConfig().getBoolean("config.allow-self-teleport") && (getPlayerToSend() != getPlayerToReceive())) || (plugin.getConfig().getBoolean("config.allow-self-teleport") == (getPlayerToSend() == getPlayerToReceive()))) {
                 getPlayerToSend().teleport(getPlayerToReceive().getLocation());
                 if (getExecutorMessage() != null)
                     getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage()));
