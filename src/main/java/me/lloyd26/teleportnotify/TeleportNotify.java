@@ -1,14 +1,13 @@
 package me.lloyd26.teleportnotify;
 
-import me.lloyd26.teleportnotify.commands.tp;
-import me.lloyd26.teleportnotify.commands.tphere;
-import me.lloyd26.teleportnotify.commands.tpall;
-import me.lloyd26.teleportnotify.commands.tpnotify;
+import me.lloyd26.teleportnotify.commands.TeleportCommand;
+import me.lloyd26.teleportnotify.commands.TeleportHereCommand;
+import me.lloyd26.teleportnotify.commands.TeleportAllCommand;
+import me.lloyd26.teleportnotify.commands.TPNotifyCommand;
 import me.lloyd26.teleportnotify.utils.UpdateChecker;
 import me.lloyd26.teleportnotify.utils.Utils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TeleportNotify extends JavaPlugin {
@@ -23,10 +22,10 @@ public final class TeleportNotify extends JavaPlugin {
         saveDefaultConfig();
 
         // Commands
-        getCommand("tpnotify").setExecutor(new tpnotify());
-        getCommand("tp").setExecutor(new tp());
-        getCommand("tphere").setExecutor(new tphere());
-        getCommand("tpall").setExecutor(new tpall());
+        getCommand("tpnotify").setExecutor(new TPNotifyCommand(this));
+        getCommand("tp").setExecutor(new TeleportCommand(this));
+        getCommand("tphere").setExecutor(new TeleportHereCommand(this));
+        getCommand("tpall").setExecutor(new TeleportAllCommand(this));
 
         // Metrics
         int pluginId = 11255;
