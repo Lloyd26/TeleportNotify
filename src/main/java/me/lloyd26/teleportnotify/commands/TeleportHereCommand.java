@@ -11,9 +11,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class tphere implements CommandExecutor {
+public class TeleportHereCommand implements CommandExecutor {
 
-    private final TeleportNotify plugin = TeleportNotify.getPlugin(TeleportNotify.class);
+    private final TeleportNotify plugin;
+
+    public TeleportHereCommand(TeleportNotify plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
