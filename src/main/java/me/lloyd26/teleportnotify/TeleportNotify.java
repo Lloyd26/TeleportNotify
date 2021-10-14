@@ -1,9 +1,7 @@
 package me.lloyd26.teleportnotify;
 
-import me.lloyd26.teleportnotify.commands.TeleportCommand;
-import me.lloyd26.teleportnotify.commands.TeleportHereCommand;
-import me.lloyd26.teleportnotify.commands.TeleportAllCommand;
-import me.lloyd26.teleportnotify.commands.TPNotifyCommand;
+import me.lloyd26.teleportnotify.commands.*;
+import me.lloyd26.teleportnotify.config.CustomConfig;
 import me.lloyd26.teleportnotify.utils.UpdateChecker;
 import me.lloyd26.teleportnotify.utils.Utils;
 import org.bstats.bukkit.Metrics;
@@ -12,8 +10,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TeleportNotify extends JavaPlugin {
 
+    public CustomConfig customConfig = new CustomConfig(this);
+    private static TeleportNotify plugin;
+
     @Override
     public void onEnable() {
+        plugin = this;
         // Plugin startup logic
         getLogger().info("TeleportNotify enabled!");
 
@@ -26,6 +28,7 @@ public final class TeleportNotify extends JavaPlugin {
         getCommand("tp").setExecutor(new TeleportCommand(this));
         getCommand("tphere").setExecutor(new TeleportHereCommand(this));
         getCommand("tpall").setExecutor(new TeleportAllCommand(this));
+        getCommand("warp").setExecutor(new WarpCommand(this));
 
         // Metrics
         int pluginId = 11255;
@@ -45,5 +48,9 @@ public final class TeleportNotify extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         getLogger().info("TeleportNotify disabled!");
+    }
+
+    public static TeleportNotify getPlugin() {
+        return plugin;
     }
 }
