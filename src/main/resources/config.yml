@@ -4,6 +4,7 @@ config:
   allow-self-teleport: false
   teleport-to-center-block: false
   DecimalFormat: "#.##"
+  permission-based-warps: true
 
 messages:
   theme:
@@ -45,8 +46,21 @@ messages:
         player: '&eYou''ve teleported all players to &6%coords%&e.'
         target: '&eAll players were teleported to &6%coords%&e.'
         staff: '&7&o[%player%: &eteleported all players to %coords%&7&o]'
+    warp:
+      list: "&eWarps: %warps%&e."
+      player: "&eYou've been teleported to the warp &6%warp%&e."
+      staff: "&7&o[%player%: &ewarped to %warp%&7&o]"
+      convert:
+        attempting: "&eAttempting to convert warps..."
+        converted: "&a%converted% out of %total% warps have been converted."
   errors:
     PlayerNotFound: "&cNo player matching &e%player% &cis connected to this server."
     NoPermission: "&cI'm sorry, but you do not have permission to perform this command."
     PlayersOnly: "&cError: Console may not execute this command."
     SelfTeleport: "&cYou cannot teleport to yourself."
+    InvalidWorld: "&cError: That world does not exists."
+    WarpNotFound: "&cError: There is no warp named \"%warp%&c\"."
+    NoWarpsDefined: "&cError: No warps defined."
+    NoWarpsAvailable: "&cError: There are no warps available."
+    NoWarpPermission: "&cYou do not have permission to access the warp."
+    EssentialsNotFound: "&cError: The dependency Essentials plugin could not be found."
