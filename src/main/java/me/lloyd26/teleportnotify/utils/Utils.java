@@ -47,6 +47,18 @@ public class Utils {
                 return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.NoPermission"));
             case PLAYERSONLY:
                 return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.PlayersOnly"));
+            case INVALIDWORLD:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.InvalidWorld"));
+            case WARPNOTFOUND:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.WarpNotFound"));
+            case NOWARPSDEFINED:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.NoWarpsDefined"));
+            case NOWARPSAVAILABLE:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.NoWarpsAvailable"));
+            case NOWARPPERMISSION:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.NoWarpPermission"));
+            case ESSENTIALSNOTFOUND:
+                return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.errors.EssentialsNotFound"));
             default:
                 return null;
         }
