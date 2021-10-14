@@ -3,6 +3,7 @@ version: ${project.version}
 main: me.lloyd26.teleportnotify.TeleportNotify
 authors: [Lloyd26]
 description: Notify users and admins when they teleport.
+softdepend: [Essentials]
 commands:
   tpnotify:
     description: TeleportNotify main command.
