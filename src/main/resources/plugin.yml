@@ -15,3 +15,6 @@ commands:
   tpall:
     description: Teleport all players to your location.
     aliases: [teleportall]
+  warp:
+    description: List all warps or warp to the specified location.
+    aliases: [warps]
