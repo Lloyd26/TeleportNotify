@@ -56,8 +56,6 @@ public class CustomConfig {
             config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
-        } {
-
         }
     }
 }
