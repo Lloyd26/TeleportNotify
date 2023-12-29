@@ -26,9 +26,9 @@ public class tphere implements CommandExecutor {
                 } else if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
                     if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
-                        TeleportUtil teleportUtil = new TeleportUtil(sender, player, target);
+                        TeleportUtil teleportUtil = new TeleportUtil(sender, target, player);
                         teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tphere.player").replaceAll("%target%", target.getName()));
-                        teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tphere.target").replaceAll("%player%", playerName));
+                        teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tphere.target").replaceAll("%player%", playerName));
                         teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", target.getName()));
                         teleportUtil.teleportPlayer();
                     }
