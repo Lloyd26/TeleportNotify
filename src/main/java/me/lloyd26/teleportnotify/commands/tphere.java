@@ -28,7 +28,7 @@ public class tphere implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[0]);
                         TeleportUtil teleportUtil = new TeleportUtil(sender, target, player);
                         teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tphere.player").replaceAll("%target%", target.getName()));
-                        teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tphere.target").replaceAll("%player%", playerName));
+                        teleportUtil.setSentMessage(plugin.getConfig().getString("messages.commands.tphere.target").replaceAll("%player%", playerName));
                         teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tphere.staff").replaceAll("%player%", playerName).replaceAll("%target%", target.getName()));
                         teleportUtil.teleportPlayer();
                     }
