@@ -12,9 +12,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class tp implements CommandExecutor {
+public class TeleportCommand implements CommandExecutor {
 
-    private final TeleportNotify plugin = TeleportNotify.getPlugin(TeleportNotify.class);
+    private final TeleportNotify plugin;
+
+    public TeleportCommand(TeleportNotify plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -27,7 +31,7 @@ public class tp implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[0]);
                         TeleportUtil teleportUtil = new TeleportUtil(player, player, target);
                         teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tp.1player.player").replace("%target%", target.getName()));
-                        teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tp.1player.target").replace("%player%", player.getName()));
+                        teleportUtil.setReceivedMessage(plugin.getConfig().getString("messages.commands.tp.1player.target").replace("%player%", player.getName()));
                         teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.1player.staff").replace("%player%", sender.getName()).replace("%target%", target.getName()));
                         teleportUtil.teleportPlayer();
                     } else if (args.length == 1 && Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(args[0]))) {
@@ -38,8 +42,8 @@ public class tp implements CommandExecutor {
                             Player target = Bukkit.getPlayer(args[1]);
                             TeleportUtil teleportUtil = new TeleportUtil(sender, playerToSend, target);
                             teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tp.2player.player").replace("%player1%", playerToSend.getName()).replace("%player2%", target.getName()));
-                            teleportUtil.setPlayerMessage(plugin.getConfig().getString("messages.commands.tp.2player.player1").replace("%player2%", target.getName()).replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
-                            teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tp.2player.player2").replace("%player1%", playerToSend.getName()).replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
+                            teleportUtil.setSentMessage(plugin.getConfig().getString("messages.commands.tp.2player.player1").replace("%player2%", target.getName()).replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
+                            teleportUtil.setReceivedMessage(plugin.getConfig().getString("messages.commands.tp.2player.player2").replace("%player1%", playerToSend.getName()).replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
                             teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.2player.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%player1%", playerToSend.getName()).replace("%player2%", target.getName()));
                             teleportUtil.teleportPlayer();
                         } else {
@@ -67,7 +71,7 @@ public class tp implements CommandExecutor {
                                 teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.self.staff").replace("%player%", sender.getName()));
                             } else {
                                 teleportUtil.setExecutorMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.player").replace("%player%", Bukkit.getPlayer(args[0]).getName()));
-                                teleportUtil.setTargetMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.target").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
+                                teleportUtil.setReceivedMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.target").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())));
                                 teleportUtil.setStaffMessage(plugin.getConfig().getString("messages.commands.tp.coords.other.staff").replace("%player%", (sender instanceof ConsoleCommandSender ? Utils.getConsoleName() : sender.getName())).replace("%target%", Bukkit.getPlayer(args[0]).getName()));
                             }
                             if (args.length == 6) {

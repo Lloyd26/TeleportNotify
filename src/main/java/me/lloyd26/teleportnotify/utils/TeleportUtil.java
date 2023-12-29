@@ -24,8 +24,8 @@ public class TeleportUtil {
     Location location;
     String usage;
     String executorMessage;
-    String playerMessage;
-    String targetMessage;
+    String sentMessage;
+    String receivedMessage;
     String staffMessage;
     Collection<? extends Player> onlinePlayers;
     Player playerToSend;
@@ -97,13 +97,13 @@ public class TeleportUtil {
 
     public void setExecutorMessage(String executorMessage) { this.executorMessage = executorMessage; }
 
-    public String getPlayerMessage() { return playerMessage; }
+    public String getSentMessage() { return sentMessage; }
 
-    public void setPlayerMessage(String playerMessage) { this.playerMessage = playerMessage; }
+    public void setSentMessage(String sentMessage) { this.sentMessage = sentMessage; }
 
-    public String getTargetMessage() { return targetMessage; }
+    public String getReceivedMessage() { return receivedMessage; }
 
-    public void setTargetMessage(String targetMessage) { this.targetMessage = targetMessage; }
+    public void setReceivedMessage(String receivedMessage) { this.receivedMessage = receivedMessage; }
 
     public String getStaffMessage() { return staffMessage; }
 
@@ -197,8 +197,8 @@ public class TeleportUtil {
                         getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage().replace("%coords%", coords)));
                     if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                         if (getPlayer() != null) {
-                            if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
-                                getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage().replace("%coords%", coords)));
+                            if (getReceivedMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
+                                getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getReceivedMessage().replace("%coords%", coords)));
                             }
                         }
                         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -223,14 +223,14 @@ public class TeleportUtil {
                     getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage()));
                 if (getExecutor().hasPermission("tpnotify.notify.notify")) {
                     if (getPlayer() != null) {
-                        if (getTargetMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
-                            getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
+                        if (getReceivedMessage() != null && getPlayer().hasPermission("tpnotify.notify.receive")) {
+                            getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', getReceivedMessage()));
                         }
                     }
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (p.hasPermission("tpnotify.notify.receive")) {
                             if (!p.getName().equals(getExecutor().getName()))
-                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', getReceivedMessage()));
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', getStaffMessage()));
                         }
                     }
@@ -243,11 +243,11 @@ public class TeleportUtil {
                 getPlayerToSend().teleport(getPlayerToReceive().getLocation());
                 if (getExecutorMessage() != null)
                     getExecutor().sendMessage(ChatColor.translateAlternateColorCodes('&', getExecutorMessage()));
-                if (getPlayerMessage() != null && getPlayerToSend().hasPermission("tpnotify.notify.receive"))
-                    getPlayerToSend().sendMessage(ChatColor.translateAlternateColorCodes('&', getPlayerMessage()));
+                if (getSentMessage() != null && getPlayerToSend().hasPermission("tpnotify.notify.receive"))
+                    getPlayerToSend().sendMessage(ChatColor.translateAlternateColorCodes('&', getSentMessage()));
                 if (getExecutor().hasPermission("tpnotify.notify.notify")) {
-                    if (getTargetMessage() != null && getPlayerToReceive().hasPermission("tpnotify.notify.receive")) {
-                        getPlayerToReceive().sendMessage(ChatColor.translateAlternateColorCodes('&', getTargetMessage()));
+                    if (getReceivedMessage() != null && getPlayerToReceive().hasPermission("tpnotify.notify.receive")) {
+                        getPlayerToReceive().sendMessage(ChatColor.translateAlternateColorCodes('&', getReceivedMessage()));
                     }
                 }
                 if (getExecutor().hasPermission("tpnotify.notify.notify")) {
